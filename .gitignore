@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.firebase
+dist/
+.DS_Store
+.idea/
+push-workdir/
+.angular/cache/

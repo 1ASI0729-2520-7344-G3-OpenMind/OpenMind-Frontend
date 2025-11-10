@@ -1,0 +1,75 @@
+<div class="login-container">
+  <div class="login-card">
+    <img src="assets/images/Logo/OpenMind_Logo.png" alt="OpenMind Logo" class="logo">
+    <p>Registro</p>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput type="text" formControlName="name" placeholder="Ingrese su nombre">
+        <mat-error *ngIf="registerForm.get('name')?.hasError('required')">
+          El nombre es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('name')?.hasError('minlength')">
+          Debe tener al menos 2 caracteres.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Correo</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="Ingrese su correo">
+        <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+          El correo es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('email')?.hasError('email') || registerForm.get('email')?.hasError('invalidEmail')">
+          Ingrese un correo válido (ej. nombre@dominio.com).
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          formControlName="password"
+          placeholder="Ingrese su contraseña"
+        >
+        <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
+          La contraseña es obligatoria.
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+          Debe tener al menos 6 caracteres.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Confirmar contraseña</mat-label>
+        <input
+          matInput
+          [type]="hideConfirmPassword ? 'password' : 'text'"
+          formControlName="confirmPassword"
+          placeholder="Confirme su contraseña"
+        >
+        <button mat-icon-button matSuffix type="button" (click)="hideConfirmPassword = !hideConfirmPassword">
+          <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="registerForm.get('confirmPassword')?.hasError('required')">
+          Confirme su contraseña.
+        </mat-error>
+        <mat-error *ngIf="registerForm.hasError('passwordsMismatch') && registerForm.get('confirmPassword')?.touched">
+          Las contraseñas no coinciden.
+        </mat-error>
+      </mat-form-field>
+
+      <a (click)="goToLogin()" style="cursor: pointer;">¿Ya tienes cuenta? Inicia sesión</a>
+
+      <button mat-raised-button color="primary" type="submit" class="login-btn">
+        Registrarse
+      </button>
+    </form>
+  </div>
+</div>

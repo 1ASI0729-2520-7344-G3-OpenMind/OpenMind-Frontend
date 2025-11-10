@@ -1,0 +1,64 @@
+<div class="home-page">
+  <section class="home-hero mat-elevation-z4">
+    <div class="hero-copy">
+      <p class="eyebrow">OpenMind </p>
+      <h1>Acompañamiento emocional, confidencial y humano</h1>
+      <p class="lead">
+        Conversa con nuestro bot, revisa tus sesiones previas y explora sugerencias
+        pensadas para cuidar de tu bienestar mental. Estamos aquí para escucharte.
+      </p>
+      <div class="hero-actions">
+        <button mat-flat-button color="primary" class="cta" [routerLink]="'/chatbot'">
+          Comenzar conversación
+        </button>
+        <button mat-stroked-button color="accent" [routerLink]="'/recom'">
+          Ver recomendaciones
+        </button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="breathe-circle">
+        <img src="assets/images/icons/bot-icon.png" alt="Ilustración del chatbot" loading="lazy">
+      </div>
+      <span class="affirmation">Respira. Aquí estás a salvo.</span>
+    </div>
+  </section>
+
+  <section class="feature-grid">
+    <mat-card class="feature-card">
+      <img src="assets/images/icons/bot-icon.png" alt="ChatBot" class="feature-img">
+      <h2>Chatea con OpenMind</h2>
+      <p>Comparte cómo te sientes, recibe contención inmediata y pequeños pasos para avanzar.</p>
+      <button mat-stroked-button color="primary" [routerLink]="'/chatbot'">Abrir chat</button>
+    </mat-card>
+
+    <mat-card class="feature-card">
+      <img src="assets/images/icons/history-icon.png" alt="Historial" class="feature-img">
+      <h2>Historial de conversaciones</h2>
+      <p>Revisa sesiones pasadas, retoma temas importantes y sigue tu evolución emocional.</p>
+      <button mat-stroked-button color="accent" [routerLink]="'/chatbot/history'">Ver historial</button>
+    </mat-card>
+
+    <mat-card class="feature-card">
+      <img src="assets/images/icons/profesional-icon.png" alt="Recomendaciones profesionales" class="feature-img">
+      <h2>Recomendaciones profesionales</h2>
+      <p>Encuentra especialistas, guías y recursos breves diseñados para acompañarte.</p>
+      <button mat-stroked-button color="primary" [routerLink]="'/recom'">Explorar</button>
+    </mat-card>
+  </section>
+
+  <section class="assurance mat-elevation-z2">
+    <mat-card class="assurance-card">
+      <h2>Nuestro compromiso contigo</h2>
+      <p>
+        Cuidamos tu privacidad y bienestar emocional. Cada interacción está pensada para
+        acompañarte con empatía, claridad y la opción de conectar con especialistas cuando lo necesites.
+      </p>
+      <ul>
+        <li>Confidencialidad: tus mensajes quedan protegidos en tu dispositivo.</li>
+        <li>Lenguaje respetuoso e inclusivo, diseñado junto a profesionales de salud mental.</li>
+        <li>Orientación sobre siguientes pasos y canales de ayuda 24/7.</li>
+      </ul>
+    </mat-card>
+  </section>
+</div>

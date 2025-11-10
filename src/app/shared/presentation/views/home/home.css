@@ -1,0 +1,229 @@
+.home-page {
+  width: min(1080px, 94%);
+  margin: 0 auto;
+  padding: 24px 0 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.home-hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 36px 42px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(108, 145, 191, 0.16), rgba(79, 109, 122, 0.12));
+  border: 1px solid rgba(79, 109, 122, 0.15);
+}
+
+.hero-copy {
+  flex: 1 1 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 520px;
+}
+
+.eyebrow {
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.78rem;
+  color: #5a6b78;
+  margin: 0;
+}
+
+.home-hero h1 {
+  font-size: clamp(1.9rem, 2.6vw, 2.6rem);
+  line-height: 1.2;
+  margin: 0;
+  color: #4f6d7a;
+}
+
+.lead {
+  font-size: 1.05rem;
+  margin: 6px 0 0;
+  color: #2d3a45;
+  line-height: 1.5;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.hero-actions .cta {
+  padding: 0 26px;
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 18px 38px rgba(79, 109, 122, 0.12);
+}
+
+.hero-visual {
+  flex: 1 1 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.breathe-circle {
+  width: min(260px, 56vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(246, 193, 119, 0.55), rgba(108, 145, 191, 0.45));
+  display: grid;
+  place-items: center;
+  box-shadow: 0 22px 44px rgba(79, 109, 122, 0.18);
+  position: relative;
+}
+
+.breathe-circle::after {
+  content: '';
+  position: absolute;
+  inset: 18px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 255, 255, 0.6);
+  animation: breathe 6s ease-in-out infinite;
+}
+
+.breathe-circle img {
+  width: 92px;
+  height: 92px;
+  filter: drop-shadow(0 6px 18px rgba(45, 58, 69, 0.25));
+}
+
+.affirmation {
+  font-size: 0.95rem;
+  color: #5a6b78;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 8px 16px;
+  border-radius: 999px;
+  box-shadow: 0 18px 38px rgba(79, 109, 122, 0.12);
+}
+
+.feature-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px 26px;
+  border-radius: 14px;
+  box-shadow: 0 18px 38px rgba(79, 109, 122, 0.12);
+  border: 1px solid transparent;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  background: #ffffff;
+}
+
+.feature-card:hover,
+.feature-card:focus-within {
+  transform: translateY(-6px);
+  border-color: rgba(108, 145, 191, 0.35);
+  box-shadow: 0 22px 44px rgba(79, 109, 122, 0.18);
+}
+
+.feature-card h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  color: #4f6d7a;
+}
+
+.feature-card p {
+  margin: 0;
+  color: #5a6b78;
+  line-height: 1.5;
+}
+
+.feature-card button {
+  align-self: flex-start;
+  border-radius: 12px;
+  padding: 0 18px;
+}
+
+.feature-img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+
+.assurance {
+  display: flex;
+  justify-content: center;
+}
+
+.assurance-card {
+  width: min(780px, 94%);
+  border-radius: 20px;
+  box-shadow: 0 18px 38px rgba(79, 109, 122, 0.12);
+  border: 1px solid rgba(79, 109, 122, 0.12);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.assurance-card h2 {
+  margin: 0;
+  color: #4f6d7a;
+  font-size: 1.45rem;
+}
+
+.assurance-card p {
+  margin: 0;
+  color: #5a6b78;
+}
+
+.assurance-card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #2d3a45;
+  display: grid;
+  gap: 6px;
+}
+
+.assurance-card li {
+  list-style: none;
+  position: relative;
+  padding-left: 18px;
+}
+
+.assurance-card li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #6c91bf;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.15); opacity: 0.65; }
+}
+
+@media (max-width: 768px) {
+  .home-page {
+    padding-bottom: 140px;
+    gap: 32px;
+  }
+
+  .home-hero {
+    padding: 28px 26px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

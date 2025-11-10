@@ -1,0 +1,51 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>history</mat-icon>&nbsp;Historial de conversaciones
+    </mat-card-title>
+    <mat-card-subtitle>Abre, revisa o elimina conversaciones guardadas</mat-card-subtitle>
+  </mat-card-header>
+
+  <!-- Acciones globales -->
+  <div class="top-actions">
+    <a mat-stroked-button color="primary" routerLink="/home">
+      <mat-icon>arrow_back</mat-icon> Inicio
+    </a>
+    <a mat-stroked-button color="accent" routerLink="/chatbot">
+      <mat-icon>smart_toy</mat-icon> Ir al chat
+    </a>
+  </div>
+
+  <mat-card-content>
+    <mat-list role="list" *ngIf="history.length; else emptyTpl">
+      <mat-list-item role="listitem" *ngFor="let c of history">
+        <mat-icon matListItemIcon>chat</mat-icon>
+
+        <div matListItemTitle>{{ c.titulo }}</div>
+        <div matListItemLine>{{ c.mensajes.length }} mensajes</div>
+
+        <!-- 👇 PONER ACCIONES EN EL SLOT CORRECTO -->
+        <div matListItemMeta class="row-actions">
+          <button mat-stroked-button color="primary" (click)="open(c.id)">
+            <mat-icon>open_in_new</mat-icon> Abrir
+          </button>
+          <button mat-stroked-button color="warn" (click)="remove(c.id)">
+            <mat-icon>delete</mat-icon> Eliminar
+          </button>
+        </div>
+      </mat-list-item>
+
+      <mat-divider></mat-divider>
+    </mat-list>
+
+    <ng-template #emptyTpl>
+      <div class="empty">
+        <mat-icon>inbox</mat-icon>
+        <p>No hay conversaciones guardadas aún.</p>
+        <a mat-flat-button color="accent" routerLink="/chatbot">
+          <mat-icon>smart_toy</mat-icon> Ir al chat
+        </a>
+      </div>
+    </ng-template>
+  </mat-card-content>
+</mat-card>

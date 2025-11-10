@@ -1,0 +1,58 @@
+:root {
+  --om-primary: #4f6d7a;
+  --om-primary-contrast: #f0f4f8;
+  --om-accent: #6c91bf;
+  --om-warm-accent: #f6c177;
+  --om-success: #7bb274;
+  --om-danger: #d16a6a;
+  --om-bg: #f3f7f9;
+  --om-card-bg: #ffffff;
+  --om-surface-muted: rgba(79, 109, 122, 0.08);
+  --om-text: #2d3a45;
+  --om-text-muted: #5a6b78;
+  --om-border: rgba(79, 109, 122, 0.15);
+  --om-radius-lg: 20px;
+  --om-radius-md: 14px;
+  --om-shadow-soft: 0 18px 38px rgba(79, 109, 122, 0.12);
+  --om-shadow-hover: 0 22px 44px rgba(79, 109, 122, 0.18);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Roboto', Arial, sans-serif;
+  background: linear-gradient(180deg, #f3f7f9 0%, #ffffff 60%, #f7fafc 100%);
+  color: #2d3a45;
+}
+
+.container {
+  max-width: 1080px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Scrollbar sutil */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(79, 109, 122, 0.3);
+  border-radius: 99px;
+}
+
+a {
+  color: #6c91bf;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+
+/* Eliminar compresión agresiva de campos; se puede ajustar por componente si se requiere */

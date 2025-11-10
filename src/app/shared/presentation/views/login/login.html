@@ -1,0 +1,52 @@
+<div class="login-container">
+  <div class="login-card">
+    <img src="assets/images/Logo/OpenMind_Logo.png" alt="OpenMind Logo" class="logo">
+    <p>Iniciar Sesión</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Correo</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="Ingrese su correo">
+        <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+          El correo es obligatorio.
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('email')?.hasError('email') || loginForm.get('email')?.hasError('invalidEmail')">
+          Ingrese un correo válido (ej. nombre@dominio.com).
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          formControlName="password"
+          placeholder="Ingrese su contraseña"
+        >
+        <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+          La contraseña es obligatoria.
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+          Debe tener al menos 6 caracteres.
+        </mat-error>
+      </mat-form-field>
+
+      <a (click)="goToRegister()" style="cursor: pointer;">¿No tienes cuenta? Regístrate aquí</a>
+
+      <div class="social-login">
+        <img src="assets/images/icons/gmail-icon.png" alt="Gmail">
+        <img src="assets/images/icons/facebook-icon.png" alt="Facebook">
+        <img src="assets/images/icons/instagram-icon.png" alt="Instagram">
+      </div>
+
+      <button mat-raised-button color="primary" type="submit" class="login-btn">
+        Ingresar
+      </button>
+
+    </form>
+  </div>
+</div>
