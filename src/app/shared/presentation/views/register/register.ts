@@ -6,8 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import {AuthService} from '../../../../core/services/auth.service';
 
-import { EmailValueObject } from '../../../models/value-objects/email.vo';
 
 @Component({
   selector: 'app-register',
@@ -27,8 +27,11 @@ export class Register {
   hidePassword = true;
   hideConfirmPassword = true;
   registerForm: FormGroup;
+  loading = false;
+  errorMessage = "";
+  successMessage = "";
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
     this.registerForm = this.fb.group(
       {
         name: ['', [Validators.required, Validators.minLength(2)]],
@@ -50,19 +53,38 @@ export class Register {
   }
 
   onSubmit() {
-    if (this.registerForm.invalid) {
-      this.registerForm.markAllAsTouched();
-      return;
+    if(this.registerForm.invalid){
+      this.registerForm.markAllAsTouched()
+      return
     }
-    const emailVO = EmailValueObject.create(this.registerForm.value.email);
-    if (!emailVO) {
-      this.registerForm.get('email')?.setErrors({ invalidEmail: true });
-      return;
-    }
-    this.router.navigate(['/']);
+    this.loading = true
+    this.errorMessage = ""
+    this.successMessage = ""
+
+    const{name, email, password} = this.registerForm.value;
+
+    this.authService.register(name, email, password).subscribe({
+      next: () => {
+        this.loading = false
+        this.successMessage = "¡Cuenta creada con exito!"
+        setTimeout(() => {
+          this.router.navigate(['/'])
+        }, 1500)
+        alert("Cuenta registrada con exito!")
+        this.router.navigate(['/'])
+      },
+      error: (err) => {
+        this.loading = false
+        this["errorMessage"] = err.error?.message || "Error al crear la cuenta. Intentalo nuevamente"
+      }
+    })
   }
 
   goToLogin() {
     this.router.navigate(['/']);
+  }
+
+  get f(){
+    return this.registerForm.controls;
   }
 }

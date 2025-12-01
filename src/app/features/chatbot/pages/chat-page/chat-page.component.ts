@@ -1,8 +1,7 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,8 +12,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { ChatRepository } from '../../data/chat.repository';
-import { Conversacion } from '../../../../shared/models/chat.models';
+import { ChatService } from '../../../../services/chat.service';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-chat-page',
@@ -28,37 +27,46 @@ import { Conversacion } from '../../../../shared/models/chat.models';
   templateUrl: './chat-page.component.html',
   styleUrls: ['./chat-page.component.css']
 })
-export class ChatPageComponent implements OnDestroy {
-  convo?: Conversacion;
-  input = '';
-  titulo = 'Nueva conversación';
-  sub: Subscription;
+export class ChatComponent implements OnInit, AfterViewChecked {
+  chatService = inject(ChatService);
+  auth = inject(AuthService);
 
-  constructor(private repo: ChatRepository) {
-    this.sub = this.repo.current$.subscribe(c => {
-      this.convo = c;
-      if (c?.titulo) this.titulo = c.titulo;
-    });
+  messages = this.chatService.messages.asReadonly();
+  loading = this.chatService.loading.asReadonly();
+  newMessage = '';
+
+  @ViewChild('scrollContainer') private scrollContainer!: ElementRef;
+
+  ngOnInit(): void {
+    const customerId = this.auth.getCustomerId();
+    if (!customerId) {
+      console.error('Usuario no autenticado');
+      return;
+    }
+    this.chatService.initConversation(customerId);
   }
 
-  send() {
-    const text = this.input.trim();
-    if (!text) return;
-    this.repo.enviarMensajeUsuario(text);
-    this.input = '';
+  ngAfterViewChecked() {
+    this.scrollToBottom();
   }
 
-  save() {
-    const name = this.titulo?.trim() || 'Conversación';
-    this.repo.guardarConversacion(name);
+  send(): void {
+    if (!this.newMessage.trim() || this.loading()) return;
+    const msg = this.newMessage.trim();
+    this.newMessage = '';
+    this.chatService.sendMessage(msg);
   }
 
-  new() {
-    this.repo.nuevaConversacion('Nueva conversación');
-    this.input = '';
+  async newConversation(): Promise<void> {
+    const customerId = this.auth.getCustomerId();
+    if (customerId) {
+      await this.chatService.startNewConversation(customerId);
+    }
   }
 
-  ngOnDestroy() {
-    this.sub?.unsubscribe();
+  private scrollToBottom(): void {
+    try {
+      this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
+    } catch (err) {}
   }
 }

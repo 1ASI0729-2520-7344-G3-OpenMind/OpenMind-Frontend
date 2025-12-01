@@ -3,13 +3,11 @@
     <mat-card-title class="title-wrap">
       <mat-form-field appearance="outline" class="title-field">
         <mat-label>Título de la conversación</mat-label>
-        <input matInput [(ngModel)]="titulo" placeholder="Nueva conversación">
+        <input matInput value="Chat con OpenMind Bot" disabled>
       </mat-form-field>
+
       <span class="actions">
-        <button mat-stroked-button color="primary" (click)="save()">
-          <mat-icon>save</mat-icon> Guardar
-        </button>
-        <button mat-stroked-button (click)="new()">
+        <button mat-stroked-button color="primary" (click)="newConversation()">
           <mat-icon>add</mat-icon> Nueva
         </button>
         <a mat-flat-button color="accent" routerLink="/chatbot/history">
@@ -19,37 +17,63 @@
     </mat-card-title>
   </mat-card-header>
 
-  <mat-card-content>
-    <div class="chat-body" [class.empty]="!(convo?.mensajes?.length)">
-      <div *ngFor="let m of convo?.mensajes" class="msg" [class.me]="m.from==='user'" [class.bot]="m.from==='bot'">
+  <mat-card-content class="chat-content">
+    <div class="chat-body" #scrollContainer>
+      <div *ngFor="let m of messages()"
+           class="msg"
+           [class.me]="m.sender === 'CUSTOMER'"
+           [class.bot]="m.sender === 'BOT'">
         <div class="bubble mat-elevation-z2">
           <div class="meta">
             <mat-chip-set>
-              <mat-chip [color]="m.from==='user' ? 'primary' : 'accent'" selected>
-                <mat-icon>{{ m.from==='user' ? 'person' : 'smart_toy' }}</mat-icon>
-                {{ m.from==='user' ? 'Tú' : 'OpenMind Bot' }}
+              <mat-chip [color]="m.sender === 'CUSTOMER' ? 'primary' : 'accent'" selected>
+                <mat-icon matChipAvatar>
+                  {{ m.sender === 'CUSTOMER' ? 'person' : 'smart_toy' }}
+                </mat-icon>
+                {{ m.sender === 'CUSTOMER' ? 'Tú' : 'OpenMind Bot' }}
               </mat-chip>
             </mat-chip-set>
-            <span class="ts">{{ m.ts | date:'short' }}</span>
+            <span class="ts">{{ m.sentAt | date:'short' }}</span>
           </div>
-          <div class="text">{{ m.text }}</div>
+          <div class="text">{{ m.content }}</div>
         </div>
       </div>
 
-      <div *ngIf="!convo?.mensajes?.length" class="placeholder">
-        <mat-icon fontIcon="chat"></mat-icon>
+      <div *ngIf="loading()" class="msg bot">
+        <div class="bubble mat-elevation-z2 typing">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <div *ngIf="messages().length === 0 && !loading()" class="placeholder">
+        <mat-icon fontIcon="chat" class="big-icon"></mat-icon>
         <p>Comienza escribiendo cómo te sientes hoy…</p>
       </div>
+
     </div>
-    <mat-divider></mat-divider>
   </mat-card-content>
+
+  <mat-divider></mat-divider>
 
   <mat-card-actions align="end" class="input-row">
     <mat-form-field appearance="fill" class="input-field">
       <mat-label>Escribe tu mensaje…</mat-label>
-      <input matInput [(ngModel)]="input" (keyup.enter)="send()">
+      <input
+        matInput
+        [(ngModel)]="newMessage"
+        (keyup.enter)="send()"
+        placeholder="Escribe aquí..."
+        [disabled]="loading()">
     </mat-form-field>
-    <button mat-fab color="primary" (click)="send()" matTooltip="Enviar">
+
+    <button
+      mat-fab
+      color="primary"
+      (click)="send()"
+      [disabled]="loading() || !newMessage.trim()"
+      matTooltip="Enviar mensaje">
       <mat-icon>send</mat-icon>
     </button>
   </mat-card-actions>
