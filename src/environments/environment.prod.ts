@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBase: 'https://openmind.chat/api/v1'
+  apiBase: 'https://openmindbackend.onrender.com/api/v1'
 };
